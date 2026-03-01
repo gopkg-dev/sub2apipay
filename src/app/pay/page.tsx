@@ -439,6 +439,29 @@ function PayContent() {
               {'\u5B89\u5168\u652F\u4ED8\uFF0C\u81EA\u52A8\u5230\u8D26'}
             </p>
           </div>
+          {!isMobile && (
+            <div className="flex shrink-0 items-center gap-2">
+              <button
+                type="button"
+                onClick={loadUserAndOrders}
+                className={[
+                  'inline-flex items-center rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors',
+                  isDark ? 'border-slate-600 text-slate-200 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-100',
+                ].join(' ')}
+              >
+                刷新
+              </button>
+              <a
+                href={ordersUrl}
+                className={[
+                  'inline-flex items-center rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors',
+                  isDark ? 'border-slate-600 text-slate-200 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-100',
+                ].join(' ')}
+              >
+                我的订单
+              </a>
+            </div>
+          )}
         </div>
 
         {error && (
@@ -519,36 +542,6 @@ function PayContent() {
                   />
                 </div>
                 <div className="space-y-4">
-                  <div className={['rounded-2xl border p-4', isDark ? 'border-slate-700 bg-slate-800/70' : 'border-slate-200 bg-slate-50'].join(' ')}>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className={['text-xs', isDark ? 'text-slate-400' : 'text-slate-500'].join(' ')}>订单中心</div>
-                        <div className="mt-1 text-lg font-semibold">最近订单：{myOrders.length} 条</div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={loadUserAndOrders}
-                          className={[
-                            'rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors',
-                            isDark ? 'border-slate-600 text-slate-200 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-100',
-                          ].join(' ')}
-                        >
-                          刷新
-                        </button>
-                        <a
-                          href={pcOrdersUrl}
-                          className={[
-                            'rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors',
-                            isDark ? 'border-slate-600 text-slate-200 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-100',
-                          ].join(' ')}
-                        >
-                          我的订单
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
                   <div className={['rounded-2xl border p-4', isDark ? 'border-slate-700 bg-slate-800/70' : 'border-slate-200 bg-slate-50'].join(' ')}>
                     <div className={['text-xs', isDark ? 'text-slate-400' : 'text-slate-500'].join(' ')}>支付说明</div>
                     <ul className={['mt-2 space-y-1 text-sm', isDark ? 'text-slate-300' : 'text-slate-600'].join(' ')}>
