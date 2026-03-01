@@ -94,12 +94,24 @@ docker compose up -d --build
 
 > `DATABASE_URL` 使用自带数据库时由 Compose 自动注入，无需手动填写。
 
-### 支付方式
+### 支付服务商与支付方式
 
-通过 `ENABLED_PAYMENT_TYPES` 控制开启哪些支付方式（逗号分隔）：
+**第一步**：通过 `PAYMENT_PROVIDERS` 声明启用哪些支付服务商（逗号分隔）：
 
 ```env
-ENABLED_PAYMENT_TYPES=alipay,wxpay,stripe
+# 仅易支付
+PAYMENT_PROVIDERS=easypay
+# 仅 Stripe
+PAYMENT_PROVIDERS=stripe
+# 两者都用
+PAYMENT_PROVIDERS=easypay,stripe
+```
+
+**第二步**：通过 `ENABLED_PAYMENT_TYPES` 控制向用户展示哪些支付渠道：
+
+```env
+# 易支付支持: alipay, wxpay；Stripe 支持: stripe
+ENABLED_PAYMENT_TYPES=alipay,wxpay
 ```
 
 #### EasyPay（支付宝 / 微信支付）
@@ -137,10 +149,31 @@ ENABLED_PAYMENT_TYPES=alipay,wxpay,stripe
 
 ### UI 定制（可选）
 
+在充值页面右侧可展示客服联系方式、说明图片等帮助内容。
+
 | 变量 | 说明 |
 |------|------|
-| `NEXT_PUBLIC_PAY_HELP_IMAGE_URL` | 帮助图片 URL（如客服二维码） |
-| `NEXT_PUBLIC_PAY_HELP_TEXT` | 帮助说明文字 |
+| `PAY_HELP_IMAGE_URL` | 帮助图片地址（支持外部 URL 或本地路径，见下方说明） |
+| `PAY_HELP_TEXT` | 帮助说明文字，用 `\n` 换行，如 `扫码加微信\n工作日 9-18 点在线` |
+
+**图片地址两种方式：**
+
+- **外部 URL**（推荐，无需改 Compose 配置）：直接填图片的公网地址，如 OSS / CDN / 图床链接。
+  ```env
+  PAY_HELP_IMAGE_URL=https://cdn.example.com/help-qr.jpg
+  ```
+
+- **本地文件**：将图片放到 `./uploads/` 目录，通过 `/uploads/文件名` 引用。
+  需在 `docker-compose.app.yml` 中挂载目录（默认已包含）：
+  ```yaml
+  volumes:
+    - ./uploads:/app/public/uploads:ro
+  ```
+  ```env
+  PAY_HELP_IMAGE_URL=/uploads/help-qr.jpg
+  ```
+
+> 点击帮助图片可在屏幕中央全屏放大查看。
 
 ### Docker Compose 专用
 

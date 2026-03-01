@@ -94,12 +94,24 @@ See [`.env.example`](./.env.example) for the full template.
 
 > `DATABASE_URL` is automatically injected by Docker Compose when using the bundled database.
 
-### Payment Methods
+### Payment Providers & Methods
 
-Control which payment methods are enabled via `ENABLED_PAYMENT_TYPES` (comma-separated):
+**Step 1**: Declare which payment providers to load via `PAYMENT_PROVIDERS` (comma-separated):
 
 ```env
-ENABLED_PAYMENT_TYPES=alipay,wxpay,stripe
+# EasyPay only
+PAYMENT_PROVIDERS=easypay
+# Stripe only
+PAYMENT_PROVIDERS=stripe
+# Both
+PAYMENT_PROVIDERS=easypay,stripe
+```
+
+**Step 2**: Control which channels are shown to users via `ENABLED_PAYMENT_TYPES`:
+
+```env
+# EasyPay supports: alipay, wxpay  |  Stripe supports: stripe
+ENABLED_PAYMENT_TYPES=alipay,wxpay
 ```
 
 #### EasyPay (Alipay / WeChat Pay)
@@ -137,10 +149,31 @@ ENABLED_PAYMENT_TYPES=alipay,wxpay,stripe
 
 ### UI Customization (Optional)
 
+Display a support contact image and description on the right side of the payment page.
+
 | Variable | Description |
 |----------|-------------|
-| `NEXT_PUBLIC_PAY_HELP_IMAGE_URL` | Help image URL (e.g. customer service QR code) |
-| `NEXT_PUBLIC_PAY_HELP_TEXT` | Help text displayed on payment page |
+| `PAY_HELP_IMAGE_URL` | Help image URL — external URL or local path (see below) |
+| `PAY_HELP_TEXT` | Help text; use `\n` for line breaks, e.g. `Scan to add WeChat\nMon–Fri 9am–6pm` |
+
+**Two ways to provide the image:**
+
+- **External URL** (recommended — no Compose changes needed): any publicly accessible image link (CDN, OSS, image hosting).
+  ```env
+  PAY_HELP_IMAGE_URL=https://cdn.example.com/help-qr.jpg
+  ```
+
+- **Local file**: place the image in `./uploads/` and reference it as `/uploads/<filename>`.
+  The directory must be mounted in `docker-compose.app.yml` (included by default):
+  ```yaml
+  volumes:
+    - ./uploads:/app/public/uploads:ro
+  ```
+  ```env
+  PAY_HELP_IMAGE_URL=/uploads/help-qr.jpg
+  ```
+
+> Clicking the help image opens it full-screen in the center of the screen.
 
 ### Docker Compose Variables
 

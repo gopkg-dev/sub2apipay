@@ -438,9 +438,11 @@ function PayContent() {
                       />
                     )}
                     {helpText && (
-                      <p className={['mt-3 text-sm leading-6', isDark ? 'text-slate-300' : 'text-slate-600'].join(' ')}>
-                        {helpText}
-                      </p>
+                      <div className={['mt-3 space-y-1 text-sm leading-6', isDark ? 'text-slate-300' : 'text-slate-600'].join(' ')}>
+                        {helpText.split('\\n').map((line, i) => (
+                          <p key={i}>{line}</p>
+                        ))}
+                      </div>
                     )}
                   </div>
                 )}
