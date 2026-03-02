@@ -42,6 +42,7 @@ export async function GET(request: NextRequest) {
         completedAt: true,
         failedReason: true,
         expiresAt: true,
+        srcHost: true,
       },
     }),
     prisma.order.count({ where }),

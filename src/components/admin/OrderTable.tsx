@@ -15,6 +15,7 @@ interface Order {
   completedAt: string | null;
   failedReason: string | null;
   expiresAt: string;
+  srcHost: string | null;
   rechargeRetryable?: boolean;
 }
 
@@ -49,6 +50,7 @@ export default function OrderTable({ orders, onRetry, onCancel, onViewDetail }: 
             <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">金额</th>
             <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">状态</th>
             <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">支付方式</th>
+            <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">来源</th>
             <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">创建时间</th>
             <th className="px-4 py-3 text-left text-xs font-medium uppercase text-gray-500">操作</th>
           </tr>
@@ -78,6 +80,9 @@ export default function OrderTable({ orders, onRetry, onCancel, onViewDetail }: 
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-500">
                   {order.paymentType === 'alipay' ? '支付宝' : '微信支付'}
+                </td>
+                <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-500">
+                  {order.srcHost || '-'}
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-500">
                   {new Date(order.createdAt).toLocaleString('zh-CN')}

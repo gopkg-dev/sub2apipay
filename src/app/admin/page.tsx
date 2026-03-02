@@ -19,6 +19,7 @@ interface AdminOrder {
   completedAt: string | null;
   failedReason: string | null;
   expiresAt: string;
+  srcHost: string | null;
 }
 
 interface AdminOrderDetail extends AdminOrder {
