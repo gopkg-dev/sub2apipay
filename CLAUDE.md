@@ -112,7 +112,7 @@ src/
 │   ├── db.ts       # Prisma 单例
 │   ├── easy-pay/   # EasyPay 支付平台集成
 │   ├── alipay/     # 支付宝直连集成 (当面付 / 手机网站支付)
-│   ├── wxpay/      # 微信支付直连集成 (Native / JSAPI / H5)
+│   ├── wxpay/      # 微信支付直连集成 (PC扫码 / H5)
 │   ├── stripe/     # Stripe 支付集成 (PaymentIntent + Payment Element)
 │   ├── sub2api/    # Sub2API 管理 API 客户端
 │   └── order/      # 订单服务、超时、充值码
